@@ -49,6 +49,26 @@ module Content {
         setTimeout(function() {fn.call(null, data);}, timeout);
     }
 
+    function modifyJaumRegexp(regexp) {
+        var jaumList = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ',
+                        'ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+        var modifiedRegexp = '';
+        for (var i = 0; i < regexp.length; i ++) {
+            var ch = regexp[i];
+            var jaumIdx = jaumList.indexOf(ch);
+            if (jaumIdx > -1) {
+                var startCode = (jaumIdx * 21 * 28) + 0xac00; // 가
+                var endCode = ((jaumIdx + 1) * 21 * 28) + 0xac00 - 1; // 깋
+                var start = String.fromCharCode(startCode);
+                var end = String.fromCharCode(endCode);
+                modifiedRegexp += '[' + start + '-' + end + ']';
+            } else {
+                modifiedRegexp += ch;
+            }
+        }
+        return modifiedRegexp;
+    }
+
     chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
             Log.debug("Received command " + request.command);
@@ -58,6 +78,10 @@ module Content {
                 if (request.caseInsensitive === true) {
                     Log.debug("Case insensitive enabled");
                     flags = "gi";
+                }
+                if (request.jaum === true) {
+                    Log.debug("Jaum mode enabled");
+                    request.regexp = modifyJaumRegexp(request.regexp);
                 }
                 clear();
                 infoSpan.add();

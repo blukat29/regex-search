@@ -1,33 +1,15 @@
-Regex Search
-===============
-
-This is a chrome extension written in [TypeScript](http://www.typescriptlang.org/) that allows you to search the text of any page using regular expressions.
-
-You can download the extension here: https://chrome.google.com/webstore/detail/bcdabfmndggphffkchfdcekcokmbnkjl
-
-Pull requests are welcome, just base your changes on the dev branch instead of master, as master is only updated on every release and is often behind the dev branch.
-
-Necessary build tools
+Regex Search with Jaum
 ======================
-- NodeJS: [http://nodejs.org/](http://nodejs.org/)
-- Grunt:
-```npm install -g grunt-cli```
 
-Optional build tools
-======================
-- [tsd](https://npmjs.org/package/tsd) (package manager for TypeScript definition files): ```npm install tsd -g```
+This repository is fork of [Regex Search](https://github.com/gsingh93/regex-search), a chrome extension written in [TypeScript](http://www.typescriptlang.org/) that allows you to search the text of any page using regular expressions.
 
-Build guide
-============
-1. Clone this repo and execute ```npm install``` inside the created directory,
-2. Run ```grunt``` in order to build the extension (```build/``` is the output directory).
+This version has additional Jaum search (초성검색) feature that allows you to search korean text with only consonants (Jaums).
 
-Contributers
-============
-
-Thanks to [ComFreek](https://github.com/ComFreek) for converting a large portion of the code base to TypeScript.
+Download here: <https://raw.githubusercontent.com/blukat29/regex-search/jaum/release/regex-search-jaum.crx>
 
 License
 =======
 
-[MIT](https://github.com/gsingh93/regex-search/blob/master/LICENSE.txt)
+Original Regex Search and this repository is distributed in MIT license.
+
+[Read License](https://github.com/blukat29/regex-search/blob/master/LICENSE.txt)

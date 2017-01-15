@@ -8,6 +8,7 @@ module Popup {
     var nextButton  = document.getElementById("next");
     var queryInput  = <HTMLInputElement> document.getElementById("query");
     var caseInsensitiveCheckbox = <HTMLInputElement> document.getElementById("case-insensitive");
+    var jaumCheckbox = <HTMLInputElement> document.getElementById("jaum");
 
     var chromeStoreURL = "https://chrome.google.com/webstore/";
 
@@ -99,9 +100,19 @@ module Popup {
             setNextButtonState();
         }
 
-        var checkboxClick = function() {
-            Log.info("Set checkbox state to " + caseInsensitiveCheckbox.checked);
+        var caseInsensitiveCheckboxClick = function() {
+            Log.info("Set case-insensitive checkbox state to " + caseInsensitiveCheckbox.checked);
             tabStates.set(id, "caseInsensitive", caseInsensitiveCheckbox.checked);
+
+            if (tabStates.isSearching(id)) {
+                setSearching(id, false, tabStates);
+                Utils.sendCommand("clear");
+            }
+        }
+
+        var jaumCheckboxClick = function() {
+            Log.info("Set jaum checkbox state to " + jaumCheckbox.checked);
+            tabStates.set(id, "jaum", jaumCheckbox.checked);
 
             if (tabStates.isSearching(id)) {
                 setSearching(id, false, tabStates);
@@ -113,23 +124,27 @@ module Popup {
         nextButton.addEventListener("click", nextButtonClick);
         queryInput.addEventListener("keydown", queryInputKeyDown);
         queryInput.addEventListener("input", queryInputInput);
-        caseInsensitiveCheckbox.onclick = checkboxClick;
+        caseInsensitiveCheckbox.onclick = caseInsensitiveCheckboxClick;
+        jaumCheckbox.onclick = jaumCheckboxClick;
     }
 
     function restoreState(tabId: number, tabStates: TabStateManager) {
         queryInput.value = tabStates.get(tabId, "query");
         caseInsensitiveCheckbox.checked = tabStates.get(tabId, "caseInsensitive");
+        jaumCheckbox.checked = tabStates.get(tabId, "jaum");
     }
 
     function search(tabId: number, tabStates: TabStateManager) {
         if (validate(queryInput.value)) {
             queryInput.className = '';
             var insensitive = caseInsensitiveCheckbox.checked;
+            var isJaum = jaumCheckbox.checked;
 
             chrome.tabs.sendMessage(tabId,
                                     {
                                         command: "search",
                                         caseInsensitive: insensitive,
+                                        jaum: isJaum,
                                         regexp: queryInput.value
                                     });
             setSearching(tabId, true, tabStates);
