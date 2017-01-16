@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
 
-    "name": "Regex Search",
+    "name": "Regex Search with Jaum (초성검색)",
     "version": "1.8",
 
     "permissions": [

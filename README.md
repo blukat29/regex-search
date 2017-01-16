@@ -5,7 +5,7 @@ This repository is fork of [Regex Search](https://github.com/gsingh93/regex-sear
 
 This version has additional Jaum search (초성검색) feature that allows you to search korean text with only consonants (Jaums).
 
-Download here: <https://raw.githubusercontent.com/blukat29/regex-search/jaum/release/regex-search-jaum.crx>
+Download here: <https://chrome.google.com/webstore/detail/daojlpmgecijlfpnfhochgdlhhdkpnef>
 
 License
 =======
